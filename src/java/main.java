@@ -32,19 +32,23 @@ public class main extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         RequestDispatcher rd = null; //Para redireccionar 
-        String paso1 = request.getParameter("paso1");
-        String paso2 = request.getParameter("paso2");
-
         /*/Aquí fijamos el destino de la redirección
          rd = request.getRequestDispatcher("boleto.jsp");
          rd.forward(request, response); //Redireccionamos
          */
-        if (paso1 != null) {
+        
+        System.out.println("Hola");
+        if(request.getParameter("modo")!=null){
+            //request.getSession().setAttribute("modo", request.getParameter("modo")); //Guardamos el modo en sesión
+            
+        }
+        
+        if (request.getParameter("paso1")!=null) {
             request.getSession().setAttribute("num_boletos", request.getParameter("num_boletos"));
             //Aquí fijamos el destino de la redirección
             rd = request.getRequestDispatcher("form2.jsp");
             rd.forward(request, response); //Redireccionamos
-        } else if (paso2 != null) {
+        } else if (request.getParameter("paso2") != null) {
             rd = request.getRequestDispatcher("presentacion_texto.jsp");
             rd.forward(request, response); //Redireccionamos
         }

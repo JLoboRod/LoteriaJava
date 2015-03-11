@@ -15,14 +15,14 @@
     <body>
         <div class="contenedor">
             <div id="sidebar">
-                <div class="panel" id="autor">
+                <div class="panel shadow" id="autor">
                     <a href="http://es.linkedin.com/in/jloborod/" target="_blanck">
                         <img class="avatar" src="assets/img/autor.jpg">
                         <p id="nombre">Joaquín Lobo Rodríguez</p>
                         <p id="info">2ºDAW - DWEServidor</p>
                     </a>
                 </div>
-                <div class="panel" id="menu">
+                <div class="panel shadow" id="menu">
                     <h1>Opciones</h1>
                     <div class="elemento">
                         <a class="btn btn-rojo" href="form1.jsp">Modo Texto</a>
