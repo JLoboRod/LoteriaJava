@@ -16,7 +16,7 @@
         <div class="contenedor">
             <div id="sidebar">
                 <div class="panel shadow" id="autor">
-                    <a href="http://es.linkedin.com/in/jloborod/" target="_blanck">
+                    <a href="http://es.linkedin.com/in/jloborod/" target="_blank">
                         <img class="avatar" src="assets/img/autor.jpg">
                         <p id="nombre">Joaquín Lobo Rodríguez</p>
                         <p id="info">2ºDAW - DWEServidor</p>
@@ -35,21 +35,26 @@
             <div id="principal">
                 <div class="panel shadow">
                     <div class="contenedor">
-                        <h1>LOTERÍA JAVA - MODO TEXTO</h1>
-                        <%int num_boletos = Integer.parseInt((String) session.getAttribute("num_boletos"));%>
-                        <p>Se juegan <%=(String) session.getAttribute("num_boletos")%> boletos.</p>
+                        <h1>LOTERÍA JAVA</h1>
+                        <% String modo = (String)request.getAttribute("modo");%>
+                        <h3>Modo <%=modo%></h3>
+                        <%int num_boletos = Integer.parseInt((String) request.getAttribute("num_boletos"));%>
+                        <p>Se juegan <%=(String) request.getAttribute("num_boletos")%> boletos.</p>
                         <form action="MainServlet">
-                            <% for(int i=0; i< num_boletos;i++){%>
+                            <% for (int i = 0; i < num_boletos; i++) {%>
                             <div class="elemento">
-                                <label for="boleto_<%=i+1%>">Boleto <%=i+1%> - Nº Apuestas</label>
+                                <label for="boleto_<%=i + 1%>">Boleto <%=i + 1%> - Nº Apuestas</label>
                                 <select name="num_apuestas">
                                     <option></option>
-                                    <% for(int j=0; j< 6;j++){%>
-                                    <option><%=j+1%></option>
+                                    <% for (int j = 0; j < 6; j++) {%>
+                                    <option><%=j + 1%></option>
                                     <%}%>
                                 </select> 
                             </div>
                             <%}%>
+                            <!--inputs ocultos-->
+                            <input type="hidden" name="num_boletos" value="<%=num_boletos%>"/>
+                            <input type="hidden" name="modo" value="<%=modo%>"/>
                             <div class="elemento">
                                 <input class="btn btn-rojo" type="submit" name="paso2" value="Continuar"/>
                             </div>  

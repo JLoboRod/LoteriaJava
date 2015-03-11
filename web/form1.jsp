@@ -16,7 +16,7 @@
         <div class="contenedor">
             <div id="sidebar">
                 <div class="panel shadow" id="autor">
-                    <a href="http://es.linkedin.com/in/jloborod/" target="_blanck">
+                    <a href="http://es.linkedin.com/in/jloborod/" target="_blank">
                         <img class="avatar" src="assets/img/autor.jpg">
                         <p id="nombre">Joaquín Lobo Rodríguez</p>
                         <p id="info">2ºDAW - DWEServidor</p>
@@ -36,12 +36,14 @@
             <div class="panel shadow">
                 <div class="contenedor">
                     <h1>LOTERÍA JAVA</h1>
-                    <h3>Modo <%=(String)session.getAttribute("modo")%></h3>
+                    <% String modo = (String)request.getAttribute("modo");%>
+                    <h3>Modo <%=modo%></h3>
                     <form action="MainServlet">
                         <div class="elemento">
                         <label for="num_boletos">Nº Boletos</label>
-                        <input type="text" name="num_boletos" id="num_boletos" value="1"/>
+                        <input type="text" name="num_boletos" value="1"/>
                         </div>
+                        <input type="hidden" name="modo" value="<%=modo%>">
                         <div class="elemento">
                         <input class="btn btn-rojo" type="submit" name="paso1" value="Continuar"/>
                         </div>

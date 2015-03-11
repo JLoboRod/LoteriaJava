@@ -5,7 +5,6 @@ package loteria.joaquin;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -40,33 +39,45 @@ public class MainServlet extends HttpServlet {
          rd = request.getRequestDispatcher("boleto.jsp");
          rd.forward(request, response); //Redireccionamos
          */
-        
-        if(request.getParameter("modo")!=null){
-            //request.getSession().setAttribute("modo", request.getParameter("modo")); //Guardamos el modo en sesión
-            
-        }
-        
-        if (request.getParameter("paso1")!=null) {
-            request.getSession().setAttribute("num_boletos", request.getParameter("num_boletos"));
-            //Aquí fijamos el destino de la redirección
-            rd = request.getRequestDispatcher("form2.jsp");
+
+        String modo = request.getParameter("modo");
+        String paso1 = request.getParameter("paso1");
+        String paso2 = request.getParameter("paso2");
+
+        if (modo != null && paso1 == null && paso2 == null) {
+            request.setAttribute("modo", request.getParameter("modo"));
+            rd = request.getRequestDispatcher("form1.jsp");
             rd.forward(request, response); //Redireccionamos
             
-        } else if (request.getParameter("paso2") != null) {
-            
-            Object oBoletos=request.getSession().getAttribute("num_boletos");
-            int num_boletos = Integer.parseInt(oBoletos.toString());
-            String [] num_apuestas=request.getParameterValues("num_apuestas");
-            Boleto[] lista_boletos = new Boleto[num_boletos];
-            
-            for (int i = 0; i < num_boletos; i++) {
-                lista_boletos[i] = new Boleto(Integer.parseInt(num_apuestas[i])); //Generamos los boletos
+        } else {
+
+            if (paso1 != null) {
+                String num_boletos = request.getParameter("num_boletos");
+                request.setAttribute("num_boletos", num_boletos);
+                request.setAttribute("modo", request.getParameter("modo"));
+                //Aquí fijamos el destino de la redirección
+                rd = request.getRequestDispatcher("form2.jsp");
+                rd.forward(request, response); //Redireccionamos
+
+            } else if (paso2 != null) {
+                Object oBoletos = request.getParameter("num_boletos");
+                int num_boletos = Integer.parseInt(oBoletos.toString());
+
+                String[] num_apuestas = request.getParameterValues("num_apuestas");
+                Boleto[] lista_boletos = new Boleto[num_boletos];
+
+                for (int i = 0; i < num_boletos; i++) {
+                    lista_boletos[i] = new Boleto(Integer.parseInt(num_apuestas[i])); //Generamos los boletos
+                }
+
+                request.setAttribute("lista_boletos", lista_boletos); //Pasamos el array de boletos a sesión
+                String destino = "";
+                destino = modo + ".jsp";    
+                
+                rd = request.getRequestDispatcher(destino); 
+                rd.forward(request, response); //Redireccionamos
+
             }
-            
-            request.getSession().setAttribute("lista_boletos", lista_boletos); //Pasamos el array de boletos a sesión
-            
-            rd = request.getRequestDispatcher("texto.jsp");
-            rd.forward(request, response); //Redireccionamos
         }
 
     }
@@ -106,9 +117,9 @@ public class MainServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     /*
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-    */
+     @Override
+     public String getServletInfo() {
+     return "Short description";
+     }// </editor-fold>
+     */
 }
