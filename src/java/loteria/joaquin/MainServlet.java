@@ -44,7 +44,7 @@ public class MainServlet extends HttpServlet {
         String paso1 = request.getParameter("paso1");
         String paso2 = request.getParameter("paso2");
 
-        if (modo != null && paso1 == null && paso2 == null) {
+        if (modo != null) {
             request.setAttribute("modo", request.getParameter("modo"));
             rd = request.getRequestDispatcher("form1.jsp");
             rd.forward(request, response); //Redireccionamos
