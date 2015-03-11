@@ -26,10 +26,10 @@
                 <div class="panel shadow" id="menu">
                     <h1>Opciones</h1>
                     <div class="elemento">
-                        <a class="btn btn-rojo" href="form1.jsp?modo=texto">Modo Texto</a>
+                        <a class="btn btn-rojo" href="form1.jsp">Modo Texto</a>
                     </div>
                     <div class="elemento">
-                        <a class="btn btn-rojo" href="form1.jsp?modo=grafico">Modo Gráfico</a>
+                        <a class="btn btn-rojo" href="form1.jsp">Modo Gráfico</a>
                     </div>
                 </div>
             </div>
