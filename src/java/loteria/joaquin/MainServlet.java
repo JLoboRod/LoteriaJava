@@ -1,3 +1,5 @@
+package loteria.joaquin;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,15 +10,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author 2DAWT
+ * @author JLoboRod
  */
-public class main extends HttpServlet {
+@WebServlet(urlPatterns = {"/MainServlet"})
+public class MainServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,7 +41,6 @@ public class main extends HttpServlet {
          rd.forward(request, response); //Redireccionamos
          */
         
-        System.out.println("Hola");
         if(request.getParameter("modo")!=null){
             //request.getSession().setAttribute("modo", request.getParameter("modo")); //Guardamos el modo en sesión
             
@@ -48,8 +51,21 @@ public class main extends HttpServlet {
             //Aquí fijamos el destino de la redirección
             rd = request.getRequestDispatcher("form2.jsp");
             rd.forward(request, response); //Redireccionamos
+            
         } else if (request.getParameter("paso2") != null) {
-            rd = request.getRequestDispatcher("presentacion_texto.jsp");
+            
+            Object oBoletos=request.getSession().getAttribute("num_boletos");
+            int num_boletos = Integer.parseInt(oBoletos.toString());
+            String [] num_apuestas=request.getParameterValues("num_apuestas");
+            Boleto[] lista_boletos = new Boleto[num_boletos];
+            
+            for (int i = 0; i < num_boletos; i++) {
+                lista_boletos[i] = new Boleto(Integer.parseInt(num_apuestas[i])); //Generamos los boletos
+            }
+            
+            request.getSession().setAttribute("lista_boletos", lista_boletos); //Pasamos el array de boletos a sesión
+            
+            rd = request.getRequestDispatcher("texto.jsp");
             rd.forward(request, response); //Redireccionamos
         }
 
@@ -89,9 +105,10 @@ public class main extends HttpServlet {
      *
      * @return a String containing servlet description
      */
+    /*
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    */
 }

@@ -1,3 +1,5 @@
+package loteria.joaquin;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,7 +12,7 @@
  */
 public class Boleto {
     private static final int MAX_APUESTAS = 8;
-    private Apuesta[] _apuestas;
+    private Apuesta[] apuestas;
     
     Boleto(){
         this.Generar();
@@ -20,17 +22,17 @@ public class Boleto {
         this.Generar(apuestas);
     }
 
-    private void Generar() {
-        this._apuestas = new Apuesta[MAX_APUESTAS];
+    public void Generar() {
+        this.apuestas = new Apuesta[MAX_APUESTAS];
         for (int i = 0; i < MAX_APUESTAS; i++) {
-            this._apuestas[i] = new Apuesta();
+            this.apuestas[i] = new Apuesta();
         }
     }
     
-    private void Generar(int n) {
-        this._apuestas = new Apuesta[n];
+    public void Generar(int n) {
+        this.apuestas = new Apuesta[n];
         for (int i = 0; i < n; i++) {
-            this._apuestas[i] = new Apuesta();
+            this.apuestas[i] = new Apuesta();
         }
     }
     
@@ -38,15 +40,21 @@ public class Boleto {
      * @return the _apuestas
      */
     public Apuesta[] getApuestas() {
-        return _apuestas;
+        return apuestas;
+    }
+    
+    public Apuesta getApuesta(int pos){
+        return apuestas[pos];
     }
 
     /**
      * @param _apuestas the _apuestas to set
      */
     public void setApuestas(Apuesta[] _apuestas) {
-        this._apuestas = _apuestas;
+        this.apuestas = _apuestas;
     }
     
-    
+    public int NumApuestas(){
+        return this.apuestas.length;
+    }
 }

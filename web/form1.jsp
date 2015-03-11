@@ -37,7 +37,7 @@
                 <div class="contenedor">
                     <h1>LOTERÍA JAVA</h1>
                     <h3>Modo <%=(String)session.getAttribute("modo")%></h3>
-                    <form action="main">
+                    <form action="MainServlet">
                         <div class="elemento">
                         <label for="num_boletos">Nº Boletos</label>
                         <input type="text" name="num_boletos" id="num_boletos" value="1"/>

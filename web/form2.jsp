@@ -38,24 +38,21 @@
                         <h1>LOTERÍA JAVA - MODO TEXTO</h1>
                         <%int num_boletos = Integer.parseInt((String) session.getAttribute("num_boletos"));%>
                         <p>Se juegan <%=(String) session.getAttribute("num_boletos")%> boletos.</p>
-                        <form action="main">
+                        <form action="MainServlet">
                             <% for(int i=0; i< num_boletos;i++){%>
                             <div class="elemento">
                                 <label for="boleto_<%=i+1%>">Boleto <%=i+1%> - Nº Apuestas</label>
-                                <select name="apuesta">
+                                <select name="num_apuestas">
                                     <option></option>
                                     <% for(int j=0; j< 6;j++){%>
                                     <option><%=j+1%></option>
                                     <%}%>
-                                </select>
-                                    
-                                
+                                </select> 
                             </div>
                             <%}%>
                             <div class="elemento">
                                 <input class="btn btn-rojo" type="submit" name="paso2" value="Continuar"/>
-                            </div>
-                            
+                            </div>  
                         </form>
                     </div>
                 </div>

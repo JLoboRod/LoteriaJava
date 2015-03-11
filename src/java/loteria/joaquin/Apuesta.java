@@ -1,3 +1,5 @@
+package loteria.joaquin;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,10 +17,12 @@ import java.util.List;
 public class Apuesta {
     
     private static final int MAX = 6;
-    private Integer[] _valores = new Integer[MAX];
+    private int num_valores = 0; 
+    private Integer[] valores = new Integer[MAX];
 
     Apuesta() {
         this.Generar();
+        this.num_valores = this.MAX;
     }
     
     public final void Generar() {
@@ -33,7 +37,7 @@ public class Apuesta {
         } while (numeros.size() < MAX);
         
         Collections.sort(numeros); //Ordenamos los números
-        numeros.toArray(this._valores); //De la lista a _valores
+        numeros.toArray(this.valores); //De la lista a _valores
     }
 
     private int Aleatorio(int ini, int fin) {
@@ -44,7 +48,20 @@ public class Apuesta {
      * @return the _valores
      */
     public Integer[] getValores() {
-        return _valores;
+        return valores;
+    }
+    
+    public Integer getValor(int pos)
+    {
+        return valores[pos];
+    }
+    public Integer[] numeros()
+    {
+        return getValores();
+    }
+    
+    public int NumValores(){
+        return this.num_valores;
     }
 
 }
