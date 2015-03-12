@@ -1,12 +1,11 @@
-package loteria.joaquin;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+import loteria.clases.Boleto;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,20 +42,30 @@ public class MainServlet extends HttpServlet {
         String modo = request.getParameter("modo");
         String paso1 = request.getParameter("paso1");
         String paso2 = request.getParameter("paso2");
-
-        if (modo != null) {
+        
+        if (modo != null && paso1 == null && paso2 == null) {
             request.setAttribute("modo", request.getParameter("modo"));
             rd = request.getRequestDispatcher("form1.jsp");
-            rd.forward(request, response); //Redireccionamos
-            
+            rd.forward(request, response); 
         } else {
 
             if (paso1 != null) {
                 String num_boletos = request.getParameter("num_boletos");
+                
                 request.setAttribute("num_boletos", num_boletos);
                 request.setAttribute("modo", request.getParameter("modo"));
-                //Aquí fijamos el destino de la redirección
-                rd = request.getRequestDispatcher("form2.jsp");
+
+                String error = "";
+                error = Filtro("num_boletos", num_boletos);
+                
+                if (error != "") { //Hay errores
+                    //Cargamos el formulario de nuevo con los errores
+                    request.setAttribute("error", (String)error);
+                    rd = request.getRequestDispatcher("form1.jsp");
+                } else { //No hay errores
+                    //Aquí fijamos el destino de la redirección
+                    rd = request.getRequestDispatcher("form2.jsp");
+                }
                 rd.forward(request, response); //Redireccionamos
 
             } else if (paso2 != null) {
@@ -72,9 +81,9 @@ public class MainServlet extends HttpServlet {
 
                 request.setAttribute("lista_boletos", lista_boletos); //Pasamos el array de boletos a sesión
                 String destino = "";
-                destino = modo + ".jsp";    
-                
-                rd = request.getRequestDispatcher(destino); 
+                destino = modo + ".jsp";
+
+                rd = request.getRequestDispatcher(destino);
                 rd.forward(request, response); //Redireccionamos
 
             }
@@ -82,6 +91,49 @@ public class MainServlet extends HttpServlet {
 
     }
 
+    /**
+     * Función que filtra los valores que llegan de los formularios
+     *
+     * @param clave
+     * @param valor
+     * @return
+     */
+    public String Filtro(String clave, String valor) {
+        String error = "";
+        if (clave == "num_boletos") {
+            if (valor == "") {
+                error = "Debe especificarse un número de boletos";
+            } else{
+                
+                try {
+                    int num_boletos = Integer.parseInt(valor);
+                    if (num_boletos<=0 || num_boletos>10){
+                        error = "El número debe estar entre 1 y 10";                   
+                    }
+                }
+                catch(Exception e) {
+                    error = "El número de boletos debe ser un número";
+                }
+            }
+        }
+        if (clave == "num_apuestas") {
+            if (valor == "Seleccione" || valor == "") {
+                error = "Debe especificarse un número de apuestas";
+            } else{ 
+                
+                try {
+                    int num_apuestas = Integer.parseInt(valor);
+                    if (num_apuestas<=0 || num_apuestas>8){
+                        error = "El número debe estar entre 1 y 8";                   
+                    }
+                }
+                catch(Exception e) {
+                    error = "El número de apuestas debe ser un número";
+                }
+            }
+        }
+        return error;
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -116,10 +168,9 @@ public class MainServlet extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    /*
-     @Override
-     public String getServletInfo() {
-     return "Short description";
-     }// </editor-fold>
-     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }

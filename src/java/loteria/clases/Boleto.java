@@ -1,4 +1,4 @@
-package loteria.joaquin;
+package loteria.clases;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -14,11 +14,11 @@ public class Boleto {
     private static final int MAX_APUESTAS = 8;
     private Apuesta[] apuestas;
     
-    Boleto(){
+    public Boleto(){
         this.Generar();
     }
     
-    Boleto(int apuestas){
+    public Boleto(int apuestas){
         this.Generar(apuestas);
     }
 

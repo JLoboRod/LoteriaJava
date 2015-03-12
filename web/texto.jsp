@@ -4,8 +4,6 @@
     Author     : JLoboRod
 --%>
 
-<%@page import="loteria.joaquin.Boleto"%>
-<%@page import="loteria.joaquin.Apuesta"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

@@ -3,7 +3,7 @@
     Created on : 10-mar-2015, 17:01:38
     Author     : 2DAWT
 --%>
-
+<%@page import="loteria.clases.FormHelper"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -43,7 +43,7 @@
                         <form action="MainServlet">
                             <% for (int i = 0; i < num_boletos; i++) {%>
                             <div class="elemento">
-                                <label for="boleto_<%=i + 1%>">Boleto <%=i + 1%> - Nº Apuestas</label>
+                                <label for="num_apuestas>">Boleto <%=i + 1%> - Nº Apuestas</label>
                                 <select name="num_apuestas">
                                     <option></option>
                                     <% for (int j = 0; j < 6; j++) {%>
@@ -65,3 +65,4 @@
         </div>
     </body>
 </html>
+

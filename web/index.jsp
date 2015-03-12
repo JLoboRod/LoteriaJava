@@ -3,7 +3,6 @@
     Created on : 10-mar-2015, 15:22:28
     Author     : 2DAWT
 --%>
-<%@page import="loteria.joaquin.MainServlet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
