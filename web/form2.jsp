@@ -4,6 +4,18 @@
     Author     : 2DAWT
 --%>
 <%@page import="loteria.clases.FormHelper"%>
+<%
+    FormHelper fh = new FormHelper();
+    String num_boletos = request.getParameter("num_boletos");
+    //Object[] strErrores =request.getParameterValues("errores");
+    
+    String[] errores = (String[])request.getAttribute("errores");
+    Object oModo = request.getAttribute("modo");
+    String modo = "";
+    if(oModo!=null){
+        modo = (String)oModo;
+    }
+%>    
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -36,20 +48,19 @@
                 <div class="panel shadow">
                     <div class="contenedor">
                         <h1>LOTERÍA JAVA</h1>
-                        <% String modo = (String)request.getAttribute("modo");%>
                         <h3>Modo <%=modo%></h3>
-                        <%int num_boletos = Integer.parseInt((String) request.getAttribute("num_boletos"));%>
-                        <p>Se juegan <%=(String) request.getAttribute("num_boletos")%> boletos.</p>
+                        <p>Se juegan <%=num_boletos%> boletos.</p>
                         <form action="MainServlet">
-                            <% for (int i = 0; i < num_boletos; i++) {%>
+                            <% for (int i = 0; i < Integer.parseInt(num_boletos); i++) {%>
                             <div class="elemento">
                                 <label for="num_apuestas>">Boleto <%=i + 1%> - Nº Apuestas</label>
                                 <select name="num_apuestas">
-                                    <option></option>
+                                    <option>Seleccione</option>
                                     <% for (int j = 0; j < 6; j++) {%>
                                     <option><%=j + 1%></option>
                                     <%}%>
-                                </select> 
+                                </select>
+                                <%=errores!=null?fh.ShowIfError(errores[i]):""%>
                             </div>
                             <%}%>
                             <!--inputs ocultos-->

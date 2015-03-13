@@ -13,6 +13,8 @@ package loteria.clases;
 public class Boleto {
     private static final int MAX_APUESTAS = 8;
     private Apuesta[] apuestas;
+    private int reintegro;
+    private int precio;
     
     public Boleto(){
         this.Generar();
@@ -22,18 +24,17 @@ public class Boleto {
         this.Generar(apuestas);
     }
 
-    public void Generar() {
-        this.apuestas = new Apuesta[MAX_APUESTAS];
-        for (int i = 0; i < MAX_APUESTAS; i++) {
-            this.apuestas[i] = new Apuesta();
-        }
-    }
-    
     public void Generar(int n) {
         this.apuestas = new Apuesta[n];
         for (int i = 0; i < n; i++) {
             this.apuestas[i] = new Apuesta();
         }
+        this.reintegro = Aleatorio(1, 9);
+        this.precio = n;
+    }
+    
+    public void Generar(){
+        this.Generar(MAX_APUESTAS);
     }
     
     /**
@@ -46,9 +47,9 @@ public class Boleto {
     public Apuesta getApuesta(int pos){
         return apuestas[pos];
     }
-
+    
     /**
-     * @param _apuestas the _apuestas to set
+     * @param apuestas the _apuestas to set
      */
     public void setApuestas(Apuesta[] _apuestas) {
         this.apuestas = _apuestas;
@@ -57,4 +58,17 @@ public class Boleto {
     public int NumApuestas(){
         return this.apuestas.length;
     }
+    
+    public static int Aleatorio(int ini, int fin) {
+        return (int) Math.floor(Math.random() * (fin - ini + 1) + ini);
+    }
+    
+    public int getPrecio(){
+        return this.precio;
+    }
+    
+    public int getReintegro(){
+        return this.reintegro;
+    }
+    
 }

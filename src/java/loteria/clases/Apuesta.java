@@ -40,10 +40,6 @@ public class Apuesta {
         numeros.toArray(this.valores); //De la lista a _valores
     }
 
-    private int Aleatorio(int ini, int fin) {
-        return (int) Math.floor(Math.random() * (fin - ini + 1) + ini);
-    }
-
     /**
      * @return the _valores
      */
@@ -63,5 +59,8 @@ public class Apuesta {
     public int NumValores(){
         return this.num_valores;
     }
-
+    
+    public static int Aleatorio(int ini, int fin) {
+        return (int) Math.floor(Math.random() * (fin - ini + 1) + ini);
+    }
 }
