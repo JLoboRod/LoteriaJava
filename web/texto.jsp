@@ -11,7 +11,7 @@
     FormHelper fh = new FormHelper();
     Object oPrecio = request.getAttribute("precio_total");
     Integer precio_total = 0;
-    if(oPrecio!=null){
+    if (oPrecio != null) {
         precio_total = Integer.parseInt(oPrecio.toString());
     }
 %>
@@ -25,24 +25,7 @@
     </head>
     <body>
         <div class="contenedor">
-            <div id="sidebar">
-                <div class="panel shadow" id="autor">
-                    <a href="http://es.linkedin.com/in/jloborod/" target="_blank">
-                        <img class="avatar" src="assets/img/autor.jpg">
-                        <p id="nombre">Joaquín Lobo Rodríguez</p>
-                        <p id="info">2ºDAW - DWEServidor</p>
-                    </a>
-                </div>
-                <div class="panel shadow" id="menu">
-                    <h1>Opciones</h1>
-                    <div class="elemento">
-                        <a class="btn btn-rojo" href="MainServlet?modo=texto">Modo Texto</a>
-                    </div>
-                    <div class="elemento">
-                        <a class="btn btn-rojo" href="MainServlet?modo=grafico">Modo Gráfico</a>
-                    </div>
-                </div>
-            </div>
+            <%@include file="sidebar.jsp" %>
             <div id="principal">
                 <div class="panel shadow">
                     <div class="contenedor">
@@ -67,11 +50,11 @@
                             <!--Recorremos los valores de cada apuesta-->
                             <%Apuesta apuesta = boleto.getApuesta(j);%>
                             <% for (int k = 0; k < apuesta.NumValores(); k++) {%>
-                            <%=apuesta.getValor(k)%>
-                            <%if (k < apuesta.NumValores() - 1) {%>
-                            ,
-                            <%}
-                                        }%>
+                                <%=apuesta.getValor(k)%>
+                                <%if (k < apuesta.NumValores() - 1) {%>
+                                ,
+                                <%}
+                            }%>
                         </p>
                         <%}%>   
                         <p>Reintegro: <%=boleto.getReintegro()%></p>

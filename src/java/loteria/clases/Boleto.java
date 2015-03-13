@@ -45,7 +45,12 @@ public class Boleto {
     }
     
     public Apuesta getApuesta(int pos){
-        return apuestas[pos];
+        if(pos>= this.apuestas.length){
+            return null;
+        }
+        else{
+            return apuestas[pos];
+        }
     }
     
     /**

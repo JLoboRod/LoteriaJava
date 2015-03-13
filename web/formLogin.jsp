@@ -1,10 +1,17 @@
+<%-- 
+    Document   : formLogin
+    Created on : 13-mar-2015, 7:21:24
+    Author     : JLoboRod
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Lotería Java</title>
-        <link rel="stylesheet" type="text/css" href="assets/css/estilos.css">
+        <title>JSP Page</title>
     </head>
     <body>
-        <div class="contenedor">
+        <h1>Hello World!</h1>
+    </body>
+</html>

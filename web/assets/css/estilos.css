@@ -64,7 +64,7 @@ div.panel{
 	font-weight: lighter;
 	text-transform: uppercase;
 }
-.panel.shadow{
+.shadow{
 	box-shadow: 10px 10px 5px #888888;
 	-webkit-box-shadow: 10px 10px 5px #888888;
 	-moz-box-shadow: 10px 10px 5px #888888;
@@ -322,3 +322,27 @@ div#principal{
 	margin-bottom: 10%;
 }
 
+table{
+    border:1px solid darkgreen;
+    background-color: #2ABB9B;
+}
+
+td{
+    border:1px solid darkgreen;
+    width: 1.3em;
+    min-width: 1.3em;
+    text-align: center;
+    background-color: #E4F1FE;
+        
+}
+
+td .num_apuesta{
+    background-color: black;
+    color: whitesmoke;
+    
+}
+
+td .valor_apuesta{
+    background-color: red;
+    color: whitesmoke;
+}

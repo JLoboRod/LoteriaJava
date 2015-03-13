@@ -63,4 +63,8 @@ public class Apuesta {
     public static int Aleatorio(int ini, int fin) {
         return (int) Math.floor(Math.random() * (fin - ini + 1) + ini);
     }
+    
+    public boolean contiene(int valor){
+        return java.util.Arrays.asList(this.valores).contains(valor);
+    }
 }
