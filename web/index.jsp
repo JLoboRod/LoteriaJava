@@ -18,7 +18,11 @@
             <div id="principal">
             <div class="panel shadow">
                 <h1>LOTERÍA JAVA</h1>
-                <p>Elija una de las dos opciones disponibles.</p>
+                
+                <p>
+                    <%=(session.getAttribute("usuario")!=null)?"Elija una de las dos opciones disponibles.":
+                            "Debe loguear para poder utilizar la aplicación."%>
+                </p>
             </div>
             </div>
         </div>

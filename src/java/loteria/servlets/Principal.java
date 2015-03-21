@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import loteria.clases.Apuesta;
 import loteria.clases.Boleto;
 
 /**
@@ -38,83 +39,94 @@ public class Principal extends HttpServlet {
         String modo = request.getParameter("modo");
         String paso1 = request.getParameter("paso1");
         String paso2 = request.getParameter("paso2");
-        
-        request.setAttribute("modo", request.getParameter("modo"));
-        
-        if (paso1 == null && paso2 == null) {
-            
-            rd = request.getRequestDispatcher("form1.jsp");
+
+        request.setAttribute("modo", modo);
+
+        if ("ultima_apuesta".equals(modo)) {
+            rd = request.getRequestDispatcher("ultimaApuesta.jsp");
             rd.forward(request, response);
-        } else if (paso1 != null && paso2 == null) {
-            String num_boletos = request.getParameter("num_boletos");
+        } 
+        else {
+            if (paso1 == null && paso2 == null) {
 
-            request.setAttribute("num_boletos", num_boletos);
-            
-
-            String error = "";
-            error = Filtro("num_boletos", num_boletos);
-
-            if (error != "") { //Hay errores
-                //Cargamos el formulario de nuevo con los errores
-                request.setAttribute("error", (String) error);
                 rd = request.getRequestDispatcher("form1.jsp");
-            } else { //No hay errores
-                //Aquí fijamos el destino de la redirección
-                rd = request.getRequestDispatcher("form2.jsp");
-            }
-            rd.forward(request, response); //Redireccionamos
+                rd.forward(request, response);
+            } else if (paso1 != null && paso2 == null) {
+                String num_boletos = request.getParameter("num_boletos");
 
-        } else if (paso2 != null && paso1 == null) {
-            boolean hayErrores = false;
-            Object oBoletos = request.getParameter("num_boletos");
-            int num_boletos = Integer.parseInt(oBoletos.toString());
-            
-            Object oNumApuestas = request.getParameterValues("num_apuestas");
-            if (oNumApuestas != null) {
-                String[] num_apuestas = (String[]) oNumApuestas;
-                
-                String[] errores = new String[num_apuestas.length];
-                for (int i = 0; i < num_apuestas.length; i++) {
-                    try {
-                        String error = Filtro("num_apuestas", (String) num_apuestas[i]);
-                        if(error != ""){
-                            hayErrores = true;
-                        }
-                        errores[i] = error;
-                    } catch (Exception e) {
-                        try (PrintWriter out = response.getWriter()) {
-                            out.println("Algo no va bien con num_apuestas...");
-                        }
-                    }
-                }
-                if (hayErrores) { //Hay errores
-                    request.setAttribute("errores", (String[])errores);
-                    
+                request.setAttribute("num_boletos", num_boletos);
+
+                String error = "";
+                error = Filtro("num_boletos", num_boletos);
+
+                if (error != "") { //Hay errores
+                    //Cargamos el formulario de nuevo con los errores
+                    request.setAttribute("error", (String) error);
+                    rd = request.getRequestDispatcher("form1.jsp");
+                } else { //No hay errores
+                    //Aquí fijamos el destino de la redirección
                     rd = request.getRequestDispatcher("form2.jsp");
-                } else {
-                    Boleto[] lista_boletos = new Boleto[num_boletos];
-                    int precio_total = 0;
-                    for (int i = 0; i < num_boletos; i++) {
-                        lista_boletos[i] = new Boleto(Integer.parseInt(num_apuestas[i])); //Generamos los boletos
-                        precio_total += lista_boletos[i].getPrecio();
+                }
+                rd.forward(request, response); //Redireccionamos
+
+            } else if (paso2 != null && paso1 == null) {
+                boolean hayErrores = false;
+                Object oBoletos = request.getParameter("num_boletos");
+                int num_boletos = Integer.parseInt(oBoletos.toString());
+
+                Object oNumApuestas = request.getParameterValues("num_apuestas");
+                if (oNumApuestas != null) {
+                    String[] num_apuestas = (String[]) oNumApuestas;
+
+                    String[] errores = new String[num_apuestas.length];
+                    for (int i = 0; i < num_apuestas.length; i++) {
+                        try {
+                            String error = Filtro("num_apuestas", (String) num_apuestas[i]);
+                            if (error != "") {
+                                hayErrores = true;
+                            }
+                            errores[i] = error;
+                        } catch (Exception e) {
+                            try (PrintWriter out = response.getWriter()) {
+                                out.println("Algo no va bien con num_apuestas...");
+                            }
+                        }
+                    }
+                    if (hayErrores) { //Hay errores
+                        request.setAttribute("errores", (String[]) errores);
+
+                        rd = request.getRequestDispatcher("form2.jsp");
+                    } else {
+                        Boleto[] lista_boletos = new Boleto[num_boletos];
+                        int precio_total = 0;
+                        for (int i = 0; i < num_boletos; i++) {
+                            lista_boletos[i] = new Boleto(Integer.parseInt(num_apuestas[i])); //Generamos los boletos
+                            precio_total += lista_boletos[i].getPrecio();
+                        }
+
+                        request.setAttribute("lista_boletos", lista_boletos); //Pasamos el array de boletos a sesión
+                        request.setAttribute("precio_total", precio_total);
+
+                        //Introducimos los datos del usuario activo en sesión
+                        Boleto boleto = lista_boletos[num_boletos - 1];
+                        Apuesta apuesta = boleto.getApuesta(boleto.NumApuestas() - 1);
+                        request.getSession().setAttribute("apuesta", apuesta);
+                        request.getSession().setAttribute("numero_apuesta", boleto.NumApuestas());
+
+                        String destino = "";
+                        destino = modo + ".jsp";
+
+                        rd = request.getRequestDispatcher(destino);
                     }
 
-                    request.setAttribute("lista_boletos", lista_boletos); //Pasamos el array de boletos a sesión
-                    request.setAttribute("precio_total", precio_total);
-                    
-                    String destino = "";
-                    destino = modo + ".jsp";
-
-                    rd = request.getRequestDispatcher(destino);
                 }
 
-            }
+                rd.forward(request, response); //Redireccionamos
 
-            rd.forward(request, response); //Redireccionamos
-
-        } else {
-            try (PrintWriter out = response.getWriter()) {
-                out.println("Algo no va bien con la redirección...");
+            } else {
+                try (PrintWriter out = response.getWriter()) {
+                    out.println("Algo no va bien con la redirección...");
+                }
             }
         }
     }
@@ -144,7 +156,7 @@ public class Principal extends HttpServlet {
             }
         }
         if (clave == "num_apuestas") {
-            if ((String)valor == "Seleccione" || valor == "") {
+            if ((String) valor == "Seleccione" || valor == "") {
                 error = "Debe especificarse un número de apuestas";
             } else {
                 try {
@@ -159,7 +171,6 @@ public class Principal extends HttpServlet {
         }
         return error;
     }
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

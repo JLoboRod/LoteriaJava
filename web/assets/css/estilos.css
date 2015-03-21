@@ -64,22 +64,21 @@ div.panel{
 	font-weight: lighter;
 	text-transform: uppercase;
 }
-.shadow{
+.panel.shadow{
 	box-shadow: 10px 10px 5px #888888;
 	-webkit-box-shadow: 10px 10px 5px #888888;
 	-moz-box-shadow: 10px 10px 5px #888888;
 }
 
-div#menu, div#autor{
-	min-height: 30%;
-	max-height: 30%;
+div#menu, div#autor, div#login{
+	min-height: 35%;
+	max-height: 40%;
 	min-width: 200px;
 }
 
-form{
-	width: 80%;
-	max-width: 100%;
-	margin: 2em auto;
+div#login{
+    heigh:50%;
+    max-height: 50%;
 }
 
 div.elemento{
@@ -129,6 +128,7 @@ div#principal{
 	width: 80%;
 	height: 100%;
 	min-height: 100%;
+        z-index: 100;
 }
 
 
@@ -336,13 +336,13 @@ td{
         
 }
 
-td .num_apuesta{
+.num_apuesta{
     background-color: black;
     color: whitesmoke;
     
 }
 
-td .valor_apuesta{
+.valor_apuesta{
     background-color: red;
     color: whitesmoke;
 }

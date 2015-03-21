@@ -7,6 +7,7 @@ package loteria.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,17 +31,58 @@ public class Usuarios extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Usuarios</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Usuarios at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        
+       
+        
+        RequestDispatcher rd = null;
+        
+        Object oSession = request.getSession().getAttribute("usuario");
+        String usuario_sesion = "";
+        
+        if(oSession != null){
+            usuario_sesion = oSession.toString();
+            
+            String accion = request.getParameter("accion");
+            if("salir".equals(accion)){
+                request.getSession().removeAttribute("usuario");
+            }
+            rd = request.getRequestDispatcher("index.jsp");
+            rd.forward(request, response);
+        }
+        else{
+            String usuario = request.getParameter("usuario");
+            String password = request.getParameter("password");
+       
+            if(loginCorrecto(usuario, password)){
+                //Entramos
+                request.getSession().setAttribute("usuario", usuario);
+            }
+            else{ //Error
+                request.setAttribute("error_login", "Datos incorrectos");
+                request.setAttribute("usuario", usuario);
+                request.setAttribute("password", password);
+            }
+            
+            rd = request.getRequestDispatcher("index.jsp");
+            rd.forward(request, response);
+        }
+        
+        
+        
+    }
+    
+    /**
+     * 
+     * @param user
+     * @param pass
+     * @return 
+     */
+    public boolean loginCorrecto(String user, String pass){
+        if(user.equals("2daw") && pass.equals("2daw")){
+            return true;  
+        }        
+        else{
+            return false;
         }
     }
 
@@ -78,9 +120,10 @@ public class Usuarios extends HttpServlet {
      *
      * @return a String containing servlet description
      */
+    /*
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    */
 }

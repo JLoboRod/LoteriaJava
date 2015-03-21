@@ -1,6 +1,6 @@
 <%-- 
-    Document   : texto
-    Created on : 11-mar-2015, 12:26:05
+    Document   : ultima_apuesta
+    Created on : 13-mar-2015, 14:19:42
     Author     : JLoboRod
 --%>
 
@@ -31,25 +31,26 @@
                 <div class="panel shadow">
                     <div class="contenedor">
                         <h1>LOTERÍA JAVA</h1>
-                        <h3>Modo gráfico</h3>
+                        <h3>Última apuesta</h3>
                         <%
-                            Boleto[] lista_boletos = (Boleto[]) request.getAttribute("lista_boletos");
+                            Apuesta apuesta = (Apuesta) session.getAttribute("apuesta");
+                            int numero_apuesta = 0;
+                            Object oNumAp = session.getAttribute("numero_apuesta");
+                            if(oNumAp!=null){
+                                numero_apuesta = Integer.parseInt(oNumAp.toString());
+                            }
                         %>
                         <br/> 
-                        <p>A continuación se muestran los boletos solicitados:</p>
-
-                        <!--Recorremos la lista de boletos-->
-                        <% for (int i = 0; i < lista_boletos.length; i++) {%>
+                        <% if(apuesta != null){%>
+                        <p>A continuación se muestra la última apuesta del usuario activo:</p>
                         <br/>
-                        <p>Boleto <%=i + 1%>:</p>
-                        <% Boleto boleto = lista_boletos[i]; %>
-                        <%=gh.getHTMLBoleto(boleto)%>
+                        <%=gh.getHTMLApuesta(apuesta, numero_apuesta)%>
                         <br/>
-                        <p>Reintegro: <%=boleto.getReintegro()%></p>
-                        <p>Importe Boleto: <%=boleto.getPrecio()%> €</p>
+                        <br/>
+                        <%}else{%>
+                            <p>No hay apuestas almacenadas</p>
                         <%}%>
-                        <br/>
-                        <p>El importe total a abonar son: <%=precio_total%> €</p>
+                        
                     </div>
                 </div>
             </div>
